@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wpple Systems | 在线的苹果操作系统全家桶</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            font-size: 4em;
+            margin: 60px 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 40px;
+        }
+        .image-container {
+            position: relative;
+            margin: 10px; 
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .image-container img {
+            border-radius: 0;
+            width: 450px;  
+            height: 300px; 
+            cursor: pointer; 
+            transition: border-radius 0.3s ease; 
+        }
+        .overlay {
+            border-radius: 0;
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: white; 
+            text-align: center;
+            padding: 10px;
+            backdrop-filter: blur(10px); 
+            cursor: pointer; 
+            transition: border-radius 0.7s ease; 
+        }
+        .image-container:hover {
+            transform: translateY(10px);
+        }
+        .image-container:hover img {
+            border-radius: 30px; 
+        }
+        .image-container:hover .overlay {
+            border-radius: 30px; 
+        }
+        .overlay-black {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: black; 
+            opacity: 0; 
+            transition: opacity 0.5s ease; 
+            pointer-events: none; 
+            z-index: 999; 
+        }
+        .overlay-black.active {
+            opacity: 1; 
+            pointer-events: auto; 
+            cursor: none; /* 鼠标不可见 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">Wpple Systems</div>
+<div class="overlay-black" id="blackOverlay"></div>
+
+<div class="container">
+    <div class="image-container" onclick="navigateTo('wOS/index.html')">
+        <img src="files/wOS.png" alt="wOS" />
+        <div class="overlay">
+            <h3>wOS</h3>
+            <p>移动端网页操作系统</p>
+        </div>
+    </div>
+    <div class="image-container" onclick="navigateTo('WacOS/index.html')">
+        <img src="files/WacOS.png" alt="WacOS" />
+        <div class="overlay">
+            <h3>WacOS</h3>
+            <p>计算机端网页操作系统</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function navigateTo(url) {
+        const overlay = document.getElementById('blackOverlay');
+        overlay.classList.add('active');
+        setTimeout(() => {
+            window.location.href = url;
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>

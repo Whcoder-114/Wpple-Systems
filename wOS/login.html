@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+    <style>
+        @font-face {
+            font-family: 'Rounded';
+            src: url('./files/fonts/font1.TTF') format('truetype');
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background:
+                url('./files/wp/13/light.JPG') no-repeat center center fixed,
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+            background-size: cover;
+            font-family: '微软雅黑', 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            overflow: hidden; /* Prevent scrolling until overlay is removed */
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1); /* Pure black overlay */
+            z-index: 9999; /* Ensure it's on top of everything */
+            transition: opacity 0.5s ease; /* Fade-out transition */
+            opacity: 1; /* Initial opacity */
+        }
+
+        .hidden {
+            opacity: 0; /* Hidden state */
+        }
+
+        .dynamac-island {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%); /* Adjust to center */
+            width: 140px;
+            height: 40px;
+            border-radius: 10000px;
+            background-color: black;
+            z-index: 1145141919; /* Above all other elements */
+        }
+
+        .top-section {
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #clock {
+            font-size: 120px;
+            color: #fff;
+            text-shadow: 2px 2px 4px #00000050;
+            font-family: 'Rounded', sans-serif;
+            margin-top: -10px;
+        }
+
+        #date {
+            font-size: 35px;
+            font-weight: bold; /* Fixed typo from bloder to bold */
+            text-shadow: 2px 2px 4px #00000050;
+            color: #fff;
+            font-family: 'Rounded', sans-serif;
+        }
+
+        /* Styles for the home bar */
+        .home-bar {
+            position: fixed;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust to center */
+            width: 200px; /* Bar width */
+            height: 7px; /* Bar height */
+            border-radius: 100000px;
+            bottom: 10px;
+            background-color: #ffffff; /* Change this color as needed */
+            z-index: 9998; /* Above all other elements */
+        }
+
+        .buttonA {
+            position: fixed;
+            left: 70px; /* Center horizontally */
+            bottom: 80px;
+            transform: translateX(-50%); /* Adjust to center */
+            width: 58px; /* Bar width */
+            height: 58px; /* Bar height */
+            backdrop-filter: blur(10px);
+            border-radius: 100000px;
+            background-color: rgba(240,240,240,0.8);
+            z-index: 9998; /* Above all other elements */
+        }
+
+        .buttonB {
+            position: fixed;
+            right: 17px; /* Center horizontally */
+            bottom: 80px;
+            transform: translateX(-50%); /* Adjust to center */
+            width: 58px; /* Bar width */
+            height:58px; /* Bar height */
+            background-color: rgba(240,240,240,0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 100000px;
+            z-index: 9998; /* Above all other elements */
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay"></div> <!-- Black loading overlay -->
+
+    <div class="top-section">
+        <div id="date"></div>
+        <div id="clock"></div>
+    </div>
+
+    <div class="dynamac-island"></div>
+
+    <!-- Home bar -->
+    <div class="home-bar"></div>
+    <div class="buttonA"></div>
+    <div class="buttonB"></div>
+
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var date = now.toLocaleDateString();
+
+            hours = padLeadingZero(hours);
+            minutes = padLeadingZero(minutes);
+
+            document.getElementById('clock').textContent = hours + ':' + minutes;
+            document.getElementById('date').textContent = date;
+        }
+
+        function padLeadingZero(n) {
+            return n < 10 ? '0' + n : n;
+        }
+
+        // Function to hide the loading overlay with fade-out effect
+        function hideLoadingOverlay() {
+            var overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('hidden'); // Add hidden class to start fade-out
+            setTimeout(function() {
+                overlay.style.display = 'none'; // Set display to none after fade-out
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            }, 500); // Match this timeout to the fade duration
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Hide the loading overlay after a short timeout for demonstration purposes
+        window.onload = function() {
+            setTimeout(hideLoadingOverlay, 2000); // Hides overlay after 2 seconds
+        };
+    </script>
+</body>
+</html>

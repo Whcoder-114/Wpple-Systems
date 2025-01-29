@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+    <style>
+        @font-face {
+            font-family: 'Rounded';
+            src: url('./files/fonts/font1.TTF') format('truetype');
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background:
+                url('./files/wp/13/light.JPG') no-repeat center center fixed,
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+            background-size: cover;
+            font-family: '微软雅黑', 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            overflow: hidden; /* Prevent scrolling until overlay is removed */
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1); /* Pure black overlay */
+            z-index: 9999; /* Ensure it's on top of everything */
+            transition: opacity 0.5s ease; /* Fade-out transition */
+            opacity: 1; /* Initial opacity */
+        }
+
+        .hidden {
+            opacity: 0; /* Hidden state */
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1); /* Pure black overlay */
+            z-index: 9999; /* Ensure it's on top of everything */
+        }
+
+        .top-section {
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #clock {
+            font-size: 100px;
+            color: #fff;
+            text-shadow: 2px 2px 4px #00000050;
+            font-family: 'Rounded', sans-serif;
+            margin-top: -5px;
+        }
+
+        #date {
+            font-size: 25px;
+            font-weight: bloder;
+            text-shadow: 2px 2px 4px #00000050;
+            color: #fff;
+            font-family: 'Rounded', sans-serif;
+        }
+
+        .user-info {
+            position: absolute;
+            bottom: 130px; /* 用户信息距离屏幕底部70px */
+            left: 50%;
+            transform: translateX(-50%); /* 水平居中 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: url('files/avatar.jpg') no-repeat center center;
+            background-size: cover;
+            margin-bottom: 4px;
+        }
+
+        .user-name {
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-size: 10px;
+        }
+
+        .password-container {
+            position: absolute;
+            bottom: 90px; /* 密码输入框距离屏幕底部50px */
+            width: 100%;
+            max-width: 170px;
+        }
+
+        .password-input {
+            border: none;
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            height: 23px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 10px;
+            color: #fff;
+            text-shadow: none;
+            caret-color: #fff;
+            outline: none;
+        }
+
+        .password-input::placeholder {
+            color: #fff;
+            opacity: 0.7;
+        }
+
+        .shake {
+            animation: shake 1s;
+            animation-iteration-count: 1;
+            transform-origin: 50% 100%;
+        }
+
+        @keyframes shake {  
+            0% { transform: translateX(10px); } /* 摇晃幅度增加到10px */  
+            10% { transform: translateX(-10px); }  
+            20% { transform: translateX(10px); }  
+            30% { transform: translateX(-10px); }  
+            40% { transform: translateX(10px); }  
+            50% { transform: translateX(-10px); }  
+            60% { transform: translateX(0); }  
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay"></div> <!-- Black loading overlay -->
+
+    <div class="top-section">
+        <div id="date"></div>
+        <div id="clock"></div>
+    </div>
+    <div class="user-info">
+        <div class="user-avatar"></div>
+        <div class="user-name">Demo</div>
+    </div>
+    <div class="password-container">
+        <input type="password" id="password" class="password-input" placeholder="密码">
+    </div>
+
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var date = now.toLocaleDateString();
+
+            hours = padLeadingZero(hours);
+            minutes = padLeadingZero(minutes);
+
+            document.getElementById('clock').textContent = hours + ':' + minutes;
+            document.getElementById('date').textContent = date;
+        }
+
+        function padLeadingZero(n) {
+            return n < 10 ? '0' + n : n;
+        }
+
+        function login() {
+            var passwordInput = document.getElementById('password');
+            var password = passwordInput.value;
+
+            if (password === '123456') {
+                window.location.href = 'desktop.html';
+            } else {
+                passwordInput.classList.add('shake');
+                setTimeout(function() {
+                    passwordInput.value = '';
+                    passwordInput.classList.remove('shake');
+                }, 1000);
+            }
+        }
+
+        document.getElementById('password').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                login();
+            }
+        });
+
+        // Function to hide the loading overlay with fade-out effect
+        function hideLoadingOverlay() {
+            var overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('hidden'); // Add hidden class to start fade-out
+            setTimeout(function() {
+                overlay.style.display = 'none'; // Set display to none after fade-out
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            }, 500); // Match this timeout to the fade duration
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Hide the loading overlay after a short timeout for demonstration purposes
+        window.onload = function() {
+            setTimeout(hideLoadingOverlay, 2000); // Hides overlay after 2 seconds
+        };
+    </script>
+</body>
+</html>

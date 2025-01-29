@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartUp</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.5s;
+            cursor: none;
+        }
+        img {
+            width: 70px;
+            height: 70px;
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <img src="files/logo.png" alt="苹果Logo" id="logo">
+    <script>
+        // 在页面加载后18秒跳转到login.html
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 18000);
+    </script>
+</body>
+</html>
